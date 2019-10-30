@@ -1,0 +1,15 @@
+# loginsys-graphql
+Node JS, MongoDB, GraphQL, Apollo
+
+========== ENVIRONTMENT VARIABLES =============
+
+APP_BIND_PORT=4020
+GRAPHQL_API_HOST=localhost
+GRAPHQL_API_PORT=4030
+
+MONGOD_HOST=localhost
+MONGOD_PORT=27017
+MONGOD_DB=st_allAang
+MONGOD_USERNAME=aang
+MONGOD_PASSWORD=mnbv123
+MONGOD_AUTH_SOURCE=st_allAang
