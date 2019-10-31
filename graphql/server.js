@@ -1,23 +1,39 @@
-var express = require('express');
-var express_graphql = require('express-graphql');
-var { buildSchema } = require('graphql');
+const express = require('express');
+const expressGraphql = require('express-graphql');
+const { buildSchema } = require('graphql');
 require("dotenv").config();
 
 // GraphQL schema
-var schema = buildSchema(`
+const schema = buildSchema(`
+    type Account{
+      username: String!
+      email: String!
+      password: String!
+    }
     type Query {
         messages: String
     }
+    type Mutation{
+      login(email: String!,password: String!): String
+    }
 `);
+
+const login = ({ email, password }) => {
+  if (email === "admin" && password === "admin") {
+    return "success login"
+  }
+  return "wrong password or email";
+}
 // Root resolver
-var root = {
-    messages: () => 'Hello Worsld!'
+const resolvers = {
+  messages: () => 'Hello World!',
+  login: login
 };
 // Create an express server and a GraphQL endpoint
-var app = express();
-app.use('/graphql', express_graphql({
-    schema: schema,
-    rootValue: root,
-    graphiql: true
+const app = express();
+app.use('/graphql', expressGraphql({
+  schema: schema,
+  rootValue: resolvers,
+  graphiql: true
 }));
-app.listen(process.env.GRAPHQL_API_PORT, () => console.log(`sExpress GraphQL Server Now Running On http://${process.env.GRAPHQL_API_HOST}:${process.env.GRAPHQL_API_PORT}/graphql`));
+app.listen(process.env.GRAPHQL_API_PORT, () => console.log(`Express GraphQL Server Now Running On http://${process.env.GRAPHQL_API_HOST}:${process.env.GRAPHQL_API_PORT}/graphql`));
